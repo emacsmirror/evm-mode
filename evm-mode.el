@@ -241,6 +241,9 @@ Highlight the 1st result."
 (defvar evm--imenu-generic-expression
   '(("Subroutine"
      "^\\s-*\\([a-zA-Z0-9_']+\\):\\s-*assembly\\s-*\{"
+     1)
+    ("Label"
+     "^\\s-*\\([a-zA-Z0-9_']+\\):\\s-*$"
      1))
   "Regular expression to generate Imenu outline.")
 
