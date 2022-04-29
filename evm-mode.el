@@ -25,7 +25,7 @@
 
 (require 'rx)
 
-(defconst evm-opcode
+(defconst evm-opcodes
   '("add"
     "addmod"
     "address"
@@ -80,6 +80,7 @@
     "jump"
     "jumpdest"
     "jumpi"
+    "keccak256"
     "log0"
     "log1"
     "log2"
@@ -171,16 +172,13 @@
     "xor")
   "List of EVM opcodes ")
 
-(defvar evm-opcode-regexp
-  (concat
-   (rx symbol-start)
-   (regexp-opt evm-opcode t)
-   (rx symbol-end))
-  "Regular expression to match EVM opcode")
+;; TODO: check if `assembly' is a preprocessor
+(defconst evm-preprocessors
+  '("assembly")
+  "List of EVM preprocessor")
 
-(defconst evm-font-lock-keywords
-  `((,evm-opcode-regexp . font-lock-keyword-face))
-  "EVM font lock keywords.")
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Syntax highlighting
 
 (defvar evm-syntax-table
   (let ((syntax-table (make-syntax-table)))
@@ -191,7 +189,55 @@
     syntax-table)
   "Syntax table for `EVM' bytecode mode.")
 
+(defvar evm-opcode-regexp
+  (concat
+   (rx symbol-start)
+   (regexp-opt evm-opcodes t)
+   (rx symbol-end))
+  "Regular expression to match EVM opcodes")
+
+(defvar evm-preprocessor-regexp
+  (concat
+   (rx symbol-start)
+   (regexp-opt evm-preprocessors t)
+   (rx symbol-end))
+  "Regular expression to match EVM preprocessors")
+
+(defun evm--match-regexp (re limit)
+  "Generic regular expression matching wrapper for RE with a given LIMIT."
+  (re-search-forward re
+                     limit ; search bound
+                     t     ; no error, return nil
+                     nil   ; do not repeat
+                     ))
+
+(defun evm--match-functions (limit)
+  "Search the buffer forward until LIMIT matching function names.
+Highlight the 1st result."
+  (evm--match-regexp
+   (concat
+    " *\\([a-zA-Z0-9_]+\\) *\(")
+   limit))
+
+(defun evm--match-preprocessor (limit)
+  "Search the buffer forward until LIMIT matching preprocessor names.
+Highlight the 1st result."
+  (evm--match-regexp
+   (concat
+    " *\\([a-zA-Z0-9_]+\\) *\(")
+   limit))
+
+(defconst evm-font-lock-keywords
+  (list
+   `(,evm-opcode-regexp . font-lock-keyword-face)
+   `(,evm-preprocessor-regexp . font-lock-preprocessor-face)
+   '(evm--match-functions (1 font-lock-function-name-face))
+   )
+  "EVM font lock keywords.")
+
+;;;;;;;;;;;;;;;;;;;;;
 ;;; Imenu settings
+
 (defvar evm--imenu-generic-expression
   '(("Subroutine"
      "^\\s-*\\([a-zA-Z0-9_']+\\):\\s-*assembly\\s-*\{"
@@ -203,19 +249,16 @@
   (save-excursion
     (imenu--generic-function evm--imenu-generic-expression)))
 
+;;;;;;;;;;;;;;;;;;;;;
+
 ;;;###autoload
 (define-derived-mode evm-mode prog-mode
   "EVM-mode"
   "Major mode for editing EVM bytecode files"
   :syntax-table evm-syntax-table
 
-  ;; Code for syntax highlighting
-  (setq font-lock-defaults '((evm-font-lock-keywords)))
-
-  ;; Highlight label
-  (font-lock-add-keywords 'evm-mode
-   '(("\\([a-zA-Z0-9_']+\\)\\s-*:\\s-*" (1 font-lock-variable-name-face)))
-   t)
+  ;; Syntax highlighting
+  (setq font-lock-defaults '(evm-font-lock-keywords))
 
   ;; Indentation
   (setq-local indent-tabs-mode nil)                    ;; using space
