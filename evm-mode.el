@@ -229,7 +229,7 @@ Highlight the 1st result."
    `(,evm-opcode-regexp . font-lock-keyword-face)
    `(,evm-non-opcode-keyword-regexp . font-lock-keyword-face)
    '(evm--match-functions (1 font-lock-function-name-face)))
-  "EVM font lock keywords.")
+  "Font lock keywords of evm-mode.")
 
 ;;;;;;;;;;;;;;;;;;;;;
 ;;; Imenu settings
