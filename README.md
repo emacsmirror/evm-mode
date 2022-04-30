@@ -15,6 +15,12 @@ Emacs major mode for editing Ethereum EVM bytecode.
 
 ## Features
 
+### Supported
+
 - Syntax highlight for EVM bytecode.
 
 - Code outline (labels and blocks) via [Imenu](https://www.gnu.org/software/emacs/manual/html_node/emacs/Imenu.html)
+
+### Todo
+
+- [ ] Auto indentation

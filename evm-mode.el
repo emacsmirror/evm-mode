@@ -1,11 +1,11 @@
-;;; evm-mode.el --- Major mode for editing Ethereum EVM bytecode.
+;;; evm-mode.el --- Major mode for editing Ethereum EVM bytecode
 
 ;; Copyright © 2022, by Ta Quang Trung
 
 ;; Author: Ta Quang Trung
 ;; Version: 0.0.1
 ;; Created: 29 April 2022
-;; Keywords: Ethereum, EVM bytecode
+;; Keywords: languages
 ;; Homepage: https://github.com/taquangtrung/emacs-evm-mode
 
 ;; This file is not part of GNU Emacs.
@@ -176,7 +176,7 @@
     "swap9"
     "timestamp"
     "xor")
-  "List of EVM opcodes ")
+  "List of EVM opcodes.")
 
 (defconst evm-non-opcode-keywords
   '("assembly")
@@ -192,7 +192,7 @@
     (modify-syntax-entry ?* ". 23b" syntax-table)
     (modify-syntax-entry ?\n ">" syntax-table)
     syntax-table)
-  "Syntax table for evm-mode.")
+  "Syntax table for `evm-mode'.")
 
 (defvar evm-opcode-regexp
   (concat
@@ -229,7 +229,7 @@ Highlight the 1st result."
    `(,evm-opcode-regexp . font-lock-keyword-face)
    `(,evm-non-opcode-keyword-regexp . font-lock-keyword-face)
    '(evm--match-functions (1 font-lock-function-name-face)))
-  "Font lock keywords of evm-mode.")
+  "Font lock keywords of `evm-mode'.")
 
 ;;;;;;;;;;;;;;;;;;;;;
 ;;; Imenu settings
@@ -261,9 +261,8 @@ Highlight the 1st result."
   (setq font-lock-defaults '(evm-font-lock-keywords))
 
   ;; Indentation
-  (setq-local indent-tabs-mode nil)                    ;; using space
-  (setq-local indent-line-function 'indent-relative)   ;; indent line relative
-  (setq-local indent-region-function '(lambda (x y) ()))    ;; disable indent region
+  (set (make-local-variable 'indent-tabs-mode) nil)
+  (set (make-local-variable 'indent-line-function) 'indent-relative)
 
   ;; Set comment command
   (set (make-local-variable 'comment-start) "//")
@@ -272,7 +271,7 @@ Highlight the 1st result."
   (set (make-local-variable 'comment-use-syntax) t)
 
   ;; Configure imenu
-  (setq-local imenu-create-index-function 'evm--imenu-create-index)
+  (set (make-local-variable 'imenu-create-index-function) 'evm--imenu-create-index)
 
   (run-hooks 'evm-hook))
 
