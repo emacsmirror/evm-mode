@@ -224,14 +224,6 @@ Highlight the 1st result."
     " *\\([a-zA-Z0-9_]+\\) *\(")
    limit))
 
-(defun evm--match-preprocessor (limit)
-  "Search the buffer forward until LIMIT matching preprocessor names.
-Highlight the 1st result."
-  (evm--match-regexp
-   (concat
-    " *\\([a-zA-Z0-9_]+\\) *\(")
-   limit))
-
 (defconst evm-font-lock-keywords
   (list
    `(,evm-opcode-regexp . font-lock-keyword-face)
