@@ -1,18 +1,17 @@
 # evm-mode
 
-Emacs major mode for editing EVM bytecode.
+Emacs major mode for editing Ethereum EVM bytecode.
 
 ![Screenshot](./assets/evm-mode.png "Screenshot")
 
 ## Installation
 
-- Automatic installation from Melpa (TBD).
+- Automatic package installation from [Melpa](https://melpa.org/).
 
-- Manual installation by putting the [evm-mode.el](evm-mode.el) file in your Emacs' load
-  path.
+- Manual installation by putting the [evm-mode.el](evm-mode.el) file in Emacs' load path.
 
 ## Features
 
-- Syntax highlighting for EVM bytecode.
+- Syntax highlight for EVM bytecode.
 
-- Bytecode outline (labels and blocks) via [Imenu](https://www.gnu.org/software/emacs/manual/html_node/emacs/Imenu.html)
+- Code outline (labels and blocks) via [Imenu](https://www.gnu.org/software/emacs/manual/html_node/emacs/Imenu.html)

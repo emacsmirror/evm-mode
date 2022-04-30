@@ -1,11 +1,11 @@
-;;; evm-mode.el --- Major mode for editing Ethereum EVM bytecode
+;;; evm-mode.el --- Major mode for editing Ethereum EVM bytecode.
 
 ;; Copyright © 2022, by Ta Quang Trung
 
 ;; Author: Ta Quang Trung
 ;; Version: 0.0.1
 ;; Created: 29 April 2022
-;; Keywords: Ethereum, EVM bytcode
+;; Keywords: Ethereum, EVM bytecode
 ;; Homepage: https://github.com/taquangtrung/emacs-evm-mode
 
 ;; This file is not part of GNU Emacs.
@@ -17,9 +17,15 @@
 
 ;;; Commentary:
 
-;; short description here
+;; Emacs major mode for editing Ethereum EVM bytecode.
 
-;; full doc on how to use here
+;; Features:
+;; - Syntax highlight for EVM bytecode.
+;; - Code outline (labels and blocks) via Imenu.
+
+;; Installation:
+;; - Automatic package installation from Melpa.
+;; - Manual installation by putting the `evm-mode.el' file in Emacs' load path.
 
 ;;; Code:
 
@@ -186,7 +192,7 @@
     (modify-syntax-entry ?* ". 23b" syntax-table)
     (modify-syntax-entry ?\n ">" syntax-table)
     syntax-table)
-  "Syntax table for `EVM' bytecode mode.")
+  "Syntax table for evm-mode.")
 
 (defvar evm-opcode-regexp
   (concat
@@ -250,12 +256,13 @@ Highlight the 1st result."
   (save-excursion
     (imenu--generic-function evm--imenu-generic-expression)))
 
-;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Major mode settings
 
 ;;;###autoload
 (define-derived-mode evm-mode prog-mode
-  "EVM-mode"
-  "Major mode for editing EVM bytecode files"
+  "evm-mode"
+  "Major mode for editing Ethereum EVM bytecode."
   :syntax-table evm-syntax-table
 
   ;; Syntax highlighting
