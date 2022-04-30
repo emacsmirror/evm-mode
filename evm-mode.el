@@ -172,10 +172,9 @@
     "xor")
   "List of EVM opcodes ")
 
-;; TODO: check if `assembly' is a preprocessor
-(defconst evm-preprocessors
+(defconst evm-non-opcode-keywords
   '("assembly")
-  "List of EVM preprocessor")
+  "List of EVM non-opcode keywords.")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Syntax highlighting
@@ -194,14 +193,14 @@
    (rx symbol-start)
    (regexp-opt evm-opcodes t)
    (rx symbol-end))
-  "Regular expression to match EVM opcodes")
+  "Regular expression to match EVM opcodes.")
 
-(defvar evm-preprocessor-regexp
+(defvar evm-non-opcode-keyword-regexp
   (concat
    (rx symbol-start)
-   (regexp-opt evm-preprocessors t)
+   (regexp-opt evm-non-opcode-keywords t)
    (rx symbol-end))
-  "Regular expression to match EVM preprocessors")
+  "Regular expression to match EVM non-opcode keywords.")
 
 (defun evm--match-regexp (re limit)
   "Generic regular expression matching wrapper for RE with a given LIMIT."
@@ -230,16 +229,15 @@ Highlight the 1st result."
 (defconst evm-font-lock-keywords
   (list
    `(,evm-opcode-regexp . font-lock-keyword-face)
-   `(,evm-preprocessor-regexp . font-lock-preprocessor-face)
-   '(evm--match-functions (1 font-lock-function-name-face))
-   )
+   `(,evm-non-opcode-keyword-regexp . font-lock-keyword-face)
+   '(evm--match-functions (1 font-lock-function-name-face)))
   "EVM font lock keywords.")
 
 ;;;;;;;;;;;;;;;;;;;;;
 ;;; Imenu settings
 
 (defvar evm--imenu-generic-expression
-  '(("Subroutine"
+  '(("Block"
      "^\\s-*\\([a-zA-Z0-9_']+\\):\\s-*assembly\\s-*\{"
      1)
     ("Label"
