@@ -8,12 +8,18 @@
 ;; Keywords: languages
 ;; Homepage: https://github.com/taquangtrung/emacs-evm-mode
 
-;; This file is not part of GNU Emacs.
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
 
-;;; License:
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
 
-;; You can redistribute this program and/or modify it under the terms of the GNU
-;; General Public License version 2.
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
 
@@ -30,6 +36,7 @@
 ;;; Code:
 
 (require 'rx)
+(require 'imenu)
 
 (defconst evm-opcodes
   '("add"
@@ -277,7 +284,7 @@ Highlight the 1st result."
 
 ;; Binding with *.evm files
 (or (assoc "\\.evm$" auto-mode-alist)
-    (setq auto-mode-alist (cons '("\\.evm$" . evm-mode) auto-mode-alist)))
+    (add-to-list 'auto-mode-alist '("\\.evm\\'" . evm-mode)))
 
 ;; Finally export the `evm-mode'
 (provide 'evm-mode)
