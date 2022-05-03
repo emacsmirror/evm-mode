@@ -283,8 +283,8 @@ Highlight the 1st result."
   (run-hooks 'evm-hook))
 
 ;; Binding with *.evm files
-(or (assoc "\\.evm$" auto-mode-alist)
-    (add-to-list 'auto-mode-alist '("\\.evm\\'" . evm-mode)))
+;;;###autoload
+(add-to-list 'auto-mode-alist '("\\.evm\\'" . evm-mode))
 
 ;; Finally export the `evm-mode'
 (provide 'evm-mode)
