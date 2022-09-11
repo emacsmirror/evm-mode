@@ -278,7 +278,8 @@ Highlight the 1st result."
   (set (make-local-variable 'comment-use-syntax) t)
 
   ;; Configure imenu
-  (set (make-local-variable 'imenu-create-index-function) 'evm--imenu-create-index))
+  (set (make-local-variable 'imenu-create-index-function)
+       'evm--imenu-create-index))
 
 ;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.evm\\'" . evm-mode))
