@@ -278,13 +278,10 @@ Highlight the 1st result."
   (set (make-local-variable 'comment-use-syntax) t)
 
   ;; Configure imenu
-  (set (make-local-variable 'imenu-create-index-function) 'evm--imenu-create-index)
+  (set (make-local-variable 'imenu-create-index-function) 'evm--imenu-create-index))
 
-  (run-hooks 'evm-hook))
-
-;; Binding with *.evm files
-(or (assoc "\\.evm$" auto-mode-alist)
-    (add-to-list 'auto-mode-alist '("\\.evm\\'" . evm-mode)))
+;;;###autoload
+(add-to-list 'auto-mode-alist '("\\.evm\\'" . evm-mode))
 
 ;; Finally export the `evm-mode'
 (provide 'evm-mode)
